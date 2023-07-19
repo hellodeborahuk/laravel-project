@@ -5,38 +5,65 @@
   @vite('resources/css/app.css')
   <title>Document</title>
 </head>
-<body>
+<body class="mx-auto max-w-screen-lg min-h-screen p-4">
   @auth
-  <div class="p-6 flex flex-col gap-4">
-    <p>Congrats, you are logged in</p>
+  <div class="flex justify-between items-center">
+    <h2 class="text-5xl font-bold text-green-900 py-6">Notes</h2>
     <form action="/logout" method="POST">
       @csrf
-      <button type="submit" class="bg-green-300 px-2 py-1">Logout</button>
+      <button type="submit" class="rounded-2xl px-3 py-1 bg-green-600 hover:bg-green-900 transition duration-500 text-green-50"">Logout</button>
     </form>
   </div>
-  <div class="border-2 border-green-500 p-6">
-    <h2>Create a new post</h2>
-    <form action='/create-post' method='POST' class="flex flex-col gap-4">
-      @csrf
-      <input type="text" placeholder="title" name="title" class="border border-gray-500">
-      <textarea name="body" placeholder="body content..." class="border border-gray-500"></textarea>
-      <button type="submit" class="bg-green-300 px-2 py-1">Create new post</button>
-  </div>
-    <div class="border-2 border-green-500 p-6">
-      <h2>All posts</h2>
-      @foreach($posts as $post)
-        <div class="bg-gray-300 p-4 m-4 space-y-2">
-          <h3>{{$post['title']}} by {{$post->user->name}}</h3>
-          <p>{{$post['body']}}</p>
-          <p><a href="/edit-post/{{$post->id}}" class="bg-blue-300 px-2 py-1">Edit</a></p>
-          <form action="/delete-post/{{$post->id}}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button class="bg-red-300 px-2 py-1">Delete</button>
-          </form>
-        </div>
-      @endforeach 
+  <div class="lg:grid grid-cols-3 gap-6 space-y-8 lg:space-y-0">
+    <div class="min-h-[170px] flex flex-col flex-grow border bg-white border-green-700 rounded-lg shadow-lg">
+      <form action='/create-post' method='POST' >
+        @csrf
+          <div class="p-4 flex items-center justify-between relative border-b border-green-700">
+            <input type="text" placeholder="Enter title..." name="title" class="text-green-900 font-bold">
+            <div class="flex space-x-2">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+          </div>
+          <div class="p-4 flex flex-col h-full justify-between">
+            <textarea name="body" placeholder="Type to add a note..." class="w-full text-green-800"></textarea>
+            <div class="flex justify-end note-footer">
+              <button type="submit" class="rounded-2xl px-3 py-1 bg-green-600 hover:bg-green-900 transition duration-500 text-green-50">Create post</button>
+            </div>
+          </div>
+      </form>
     </div>
+     @foreach($posts as $post)
+       <div class="min-h-[170px] flex flex-col border border-green-700 bg-green-50 rounded-lg shadow-lg">
+        <div class="p-4 flex items-center justify-between relative border-b border-green-700">
+          <h3>{{$post['title']}}</h3>         
+          <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+        </div>
+        <div class="p-4 flex flex-col h-full justify-between">
+          <p>{{$post['body']}}</p>  
+          <div class="flex items-center justify-between note-footer mt-2">
+            <small class="text-green-900">{{$post->created_at->diffForHumans()}} by {{$post->user->name}}</small>
+            <div class="flex gap-2">
+              <p><a href="/edit-post/{{$post->id}}" class="text-green-900 hover:text-green-600 cursor-pointer">Edit</a></p>
+              <form action="/delete-post/{{$post->id}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="text-green-900 hover:text-green-600 cursor-pointer">Delete</button>
+              </form> 
+            </div>
+             
+          </div>        
+                
+        </div>
+      </div> 
+      @endforeach 
+</div>
+
   @else
     <div class="border-2 border-green-500 p-6">
       <h2 class="mb-2">Register</h2>
