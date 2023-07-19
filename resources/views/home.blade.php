@@ -49,11 +49,11 @@
           <div class="flex items-center justify-between note-footer mt-2">
             <small class="text-green-900">{{$post->created_at->diffForHumans()}} by {{$post->user->name}}</small>
             <div class="flex gap-2">
-              <p><a href="/edit-post/{{$post->id}}" class="text-green-900 hover:text-green-600 cursor-pointer">Edit</a></p>
+              <p><a href="/edit-post/{{$post->id}}" class="text-green-900 hover:text-green-600 cursor-pointer h-6 w-6"><x-feathericon-edit /></a></p>
               <form action="/delete-post/{{$post->id}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button class="text-green-900 hover:text-green-600 cursor-pointer">Delete</button>
+                <button class="text-green-900 hover:text-green-600 cursor-pointer w-6 h-6"><x-monoicon-delete /></button>
               </form> 
             </div>
              
