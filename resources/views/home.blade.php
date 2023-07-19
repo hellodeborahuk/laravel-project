@@ -8,7 +8,7 @@
 <body class="mx-auto max-w-screen-lg min-h-screen p-4">
   @auth
   <div class="flex justify-between items-center">
-    <h2 class="text-5xl font-bold text-green-900 py-6">Notes</h2>
+    <h1 class="text-5xl font-bold text-green-900 py-6">Notes</h1>
     <form action="/logout" method="POST">
       @csrf
       <button type="submit" class="rounded-2xl px-3 py-1 bg-green-600 hover:bg-green-900 transition duration-500 text-green-50"">Logout</button>
